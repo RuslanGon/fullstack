@@ -1,16 +1,24 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+import cors from 'cors'
 
 const app = express();
-dotenv.config()
+dotenv.config();
 
 // Constants
-const PORT = process.env.PORT || 3001
-const DB_USER = process.env.DB_USER
-const DB_PASSWORD = process.env.DB_PASSWORD
-const DB_NAME = process.env.DB_NAME
+const PORT = process.env.PORT || 3001;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
+// Middleware
+app.use(cors())
+app.use(express.json())
+
+app.get('/', (req, res) => {
+res.json({message:'All is fine'})
+})
 
 async function start() {
   try {
@@ -18,8 +26,8 @@ async function start() {
       `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.9yeu1fb.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
     );
     app.listen(PORT, () => {
-        console.log(`Server start port on ${PORT}`);
-    })
+      console.log(`Server start port on ${PORT}`);
+    });
   } catch (error) {
     console.log("error");
   }
