@@ -16,11 +16,11 @@ const DB_NAME = process.env.DB_NAME;
 app.use(cors())
 app.use(express.json())
 
-app.get('/', (req, res) => {
-return res.json({message:'All is fine Ruslan'})
-})
+// app.get('/', (req, res) => {
+// return res.json({message:'All is fine Ruslan'})
+// })
 
-async function start() {
+async function startServer() {
   try {
     await mongoose.connect(
       `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.9yeu1fb.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
@@ -32,4 +32,4 @@ async function start() {
     console.log("error");
   }
 }
-start();
+startServer();
