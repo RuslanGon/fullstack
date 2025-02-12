@@ -1,10 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-import { defineConfig } from 'tailwindcss'
-
-export default defineConfig({
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {},
   },
-  plugins: [import('@tailwindcss/line-clamp')],
-})
+  plugins: [
+    async () => {
+      const lineClamp = await import('@tailwindcss/line-clamp');
+      return lineClamp.default; // Access the default export
+    },
+  ],
+};

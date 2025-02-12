@@ -1,6 +1,11 @@
+/** @type {import('tailwindcss').Config} */
 export default {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  }
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [require('@tailwindcss/line-clamp')], // Скорее всего, это можно оставить без изменений
+}
