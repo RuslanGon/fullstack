@@ -1,19 +1,26 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     username: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     posts: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Post'
-        }]
-    }
-})
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Post",
+        },
+      ],
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model('User', userSchema)
