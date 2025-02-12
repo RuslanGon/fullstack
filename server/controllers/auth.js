@@ -70,7 +70,7 @@ export const login = async (req, res) => {
 }
 
 // Get me
-export const getme = async (req, res) => {
+export const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.userId)
     if (!user) {
