@@ -27,7 +27,8 @@ export const register = async (req, res) => {
         message: 'Регистрация прошла успешно.',
     })
   } catch (error) {
-    res.json({ message: 'Ошибка при создании пользователя.' })
+    res.json({ 
+        message: 'Ошибка при создании пользователя.' })
   }
 };
 // Login user
