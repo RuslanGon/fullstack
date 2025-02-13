@@ -1,24 +1,26 @@
+import { NavLink } from "react-router-dom";
+
 const Navbar = () => {
   return (
-    <div className="flex py-4 justify-between items-center">
-      <span className="flex justify-center items-center w-6 h-6 bg-gray-600 text-xs text-white rounded-sm">
+    <div className='flex py-4 justify-between items-center'>
+    <span className='flex justify-center items-center w-6 h-6 bg-gray-600 text-xs text-white rounded-sm'>
         E
-      </span>
+    </span>
       <ul className="flex gap-8">
         <li>
-          <a href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink to={'/'} href="" className="text-xs text-gray-400 hover:text-white">
             Main
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink to={'/posts'} href="" className="text-xs text-gray-400 hover:text-white">
             My posts
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink to={'/new'} href="" className="text-xs text-gray-400 hover:text-white">
             Add post
-          </a>
+          </NavLink>
         </li>
       </ul>
       <div className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm px-4 py-2 cursor-pointer">
