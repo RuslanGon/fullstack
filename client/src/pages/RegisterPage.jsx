@@ -30,7 +30,7 @@ const RegisterPage = () => {
         <Link
           to={"/login"}
           className="flex justify-center items-center text-sx text-white">
-          Уже зарегистрированы ?
+          Уже зарегистрированы
         </Link>
       </div>
     </form>
