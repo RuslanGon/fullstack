@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
+
+  const activeStyles = {
+    color: 'white'
+  }
+
   return (
     <div className='flex py-4 justify-between items-center'>
     <span className='flex justify-center items-center w-6 h-6 bg-gray-600 text-xs text-white rounded-sm'>
@@ -8,17 +13,17 @@ const Navbar = () => {
     </span>
       <ul className="flex gap-8">
         <li>
-          <NavLink to={'/'} href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink style={({isActive}) => isActive ? activeStyles : undefined} to={'/'} href="" className="text-xs text-gray-400 hover:text-white">
             Main
           </NavLink>
         </li>
         <li>
-          <NavLink to={'/posts'} href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink style={({isActive}) => isActive ? activeStyles : undefined} to={'/posts'} href="" className="text-xs text-gray-400 hover:text-white">
             My posts
           </NavLink>
         </li>
         <li>
-          <NavLink to={'/new'} href="" className="text-xs text-gray-400 hover:text-white">
+          <NavLink style={({isActive}) => isActive ? activeStyles : undefined} to={'/new'} href="" className="text-xs text-gray-400 hover:text-white">
             Add post
           </NavLink>
         </li>
