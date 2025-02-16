@@ -1,6 +1,33 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../redux/features/auth/authSlice.js";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate
+
+  const status = useSelector(state => state.auth.status)
+
+  useEffect(() => {
+    if (status) {
+      toast(status);
+    }
+  }, [status]);
+
+  const handleSubmit = () => {
+    try {
+      dispatch(loginUser({username, password}))
+   
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
@@ -11,6 +38,8 @@ const LoginPage = () => {
         Username:
         <input
           type="text"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
           placeholder="username"
           className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700"/>
       </label>
@@ -18,11 +47,13 @@ const LoginPage = () => {
         Password:
         <input
           type="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           placeholder="password"
           className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700"/>
       </label>
       <div className="flex gap-8 justify-center mt-4">
-      <button type="submit" className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600">Войти</button>
+      <button onClick={handleSubmit} type="submit" className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600">Войти</button>
       <Link to={'/register'} className="flex justify-center items-center text-sx text-white">
       Нет аккунта ?
       </Link>
