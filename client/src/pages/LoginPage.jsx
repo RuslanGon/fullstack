@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Добавляем useNavigate для редиректа
 import { loginUser } from "../redux/features/auth/authSlice.js";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Используем useNavigate
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch()
-  // const navigate = useNavigate
-
-  const status = useSelector(state => state.auth.status)
+  const status = useSelector(state => state.auth.status);
+  const isAuth = useSelector(state => Boolean(state.auth.token)); // Проверяем авторизацию
 
   useEffect(() => {
     if (status) {
@@ -19,14 +19,19 @@ const LoginPage = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/'); // Редиректим на главную страницу, если пользователь уже авторизован
+    }
+  }, [isAuth, navigate]);
+
   const handleSubmit = () => {
     try {
-      dispatch(loginUser({username, password}))
-   
+      dispatch(loginUser({ username, password }));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <form
@@ -46,17 +51,23 @@ const LoginPage = () => {
       <label className="text-xs text-gray-400">
         Password:
         <input
-          type="Password"
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder="password"
           className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700"/>
       </label>
       <div className="flex gap-8 justify-center mt-4">
-      <button onClick={handleSubmit} type="submit" className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600">Войти</button>
-      <Link to={'/register'} className="flex justify-center items-center text-sx text-white">
-      Нет аккунта ?
-      </Link>
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600"
+        >
+          Войти
+        </button>
+        <Link to={'/register'} className="flex justify-center items-center text-sx text-white">
+          Нет аккаунта?
+        </Link>
       </div>
     </form>
   );

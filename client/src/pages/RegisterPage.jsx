@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom"; // Добавляем useNavigate
 import { registerUser } from "../redux/features/auth/authSlice.js";
-import {toast} from 'react-toastify'
-
+import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Используем useNavigate
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch()
-
-  const status = useSelector(state => state.auth.status)
+  const status = useSelector(state => state.auth.status);
+  const isAuth = useSelector(state => Boolean(state.auth.token)); // Проверяем авторизацию
 
   useEffect(() => {
     if (status) {
@@ -19,20 +19,27 @@ const RegisterPage = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/'); // Редиректим на главную страницу, если пользователь уже авторизован
+    }
+  }, [isAuth, navigate]);
+
   const handleSubmit = () => {
     try {
-      dispatch(registerUser({username, password}))
-      setUsername('')
-      setPassword('')
+      dispatch(registerUser({ username, password }));
+      setUsername('');
+      setPassword('');
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="w-1/4 h-60 mx-auto mt-40">
+      className="w-1/4 h-60 mx-auto mt-40"
+    >
       <h1 className="text-lg text-white text-center">Registration</h1>
       <label className="text-xs text-gray-400">
         Username:
@@ -50,17 +57,17 @@ const RegisterPage = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder="password"
-          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700" />
+          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700"/>
       </label>
       <div className="flex gap-8 justify-center mt-4">
-        <button onClick={handleSubmit}
+        <button
+          onClick={handleSubmit}
           type="submit"
-          className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600">
+          className="flex justify-between items-center text-xs text-white rounded-sm py-2 px-4 cursor-pointer bg-gray-600"
+        >
           Подтвердить
         </button>
-        <Link
-          to={"/login"}
-          className="flex justify-center items-center text-xs text-white">
+        <Link to={"/login"} className="flex justify-center items-center text-xs text-white">
           Уже зарегистрированы
         </Link>
       </div>
