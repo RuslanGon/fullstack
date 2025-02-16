@@ -32,11 +32,27 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ username, p
     }
 });
 
+export const getMe = createAsyncThunk('auth/getme', async ({ rejectWithValue }) => {
+    try {
+        const { data } = await axios.get('/auth/me');
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || "Проверка авторизации");
+    }
+});
+
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logout: state => {
+            state.user = null
+            state.token = null
+            state.isLoading = false
+            state.status = null
+        }
+    },
     extraReducers: (builder) => {
         builder
 
@@ -72,8 +88,28 @@ export const authSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.status = action.payload;
-            });
+            })
+
+            // getMe проверка авторизации
+
+            .addCase(getMe.pending, (state) => {
+                state.isLoading = true;
+                state.status = null;
+            })
+            .addCase(getMe.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.status = null;
+                state.user = action.payload?.user;
+                state.token = action.payload?.token;
+            })
+            .addCase(getMe.rejected, (state, action) => {
+                state.isLoading = false;
+                state.status = action.payload;
+            })
+
     }
 });
+
+export const checkIsAuth = state => Boolean(state.auth.token)
 
 export default authSlice.reducer;
