@@ -15,14 +15,12 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (status) {
-      // toast(toast());
-      toast('Вы вощли в систему')
+      toast(toast());
     }
   }, [status]);
 
   useEffect(() => {
     if (isAuth) {
-
       navigate('/'); 
     }
   }, [isAuth, navigate]);
@@ -30,6 +28,7 @@ const LoginPage = () => {
   const handleSubmit = () => {
     try {
       dispatch(loginUser({ username, password }));
+      toast('Вы вошли в систему')
     } catch (error) {
       console.log(error);
     }
