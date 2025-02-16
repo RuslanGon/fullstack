@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom"; // Добавляем useNavigate для редиректа
+import { Link, useNavigate } from "react-router-dom"; 
 import { loginUser } from "../redux/features/auth/authSlice.js";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -8,20 +8,22 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Используем useNavigate
+  const navigate = useNavigate(); 
 
   const status = useSelector(state => state.auth.status);
-  const isAuth = useSelector(state => Boolean(state.auth.token)); // Проверяем авторизацию
+  const isAuth = useSelector(state => Boolean(state.auth.token)); 
 
   useEffect(() => {
     if (status) {
-      toast(status);
+      // toast(toast());
+      toast('Вы вощли в систему')
     }
   }, [status]);
 
   useEffect(() => {
     if (isAuth) {
-      navigate('/'); // Редиректим на главную страницу, если пользователь уже авторизован
+
+      navigate('/'); 
     }
   }, [isAuth, navigate]);
 
