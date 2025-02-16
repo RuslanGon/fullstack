@@ -9,17 +9,19 @@ const RegisterPage = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const dispatsh = useDispatch()
+  const dispatch = useDispatch()
 
-  const {status} = useSelector(state => state.auth.status)
+  const status = useSelector(state => state.auth.status)
 
   useEffect(() => {
-
-  },[status])
+    if (status) {
+      toast(status);
+    }
+  }, [status]);
 
   const handleSubmit = () => {
     try {
-      dispatsh(registerUser({username, password}))
+      dispatch(registerUser({username, password}))
       setUsername('')
       setPassword('')
     } catch (error) {
@@ -44,7 +46,7 @@ const RegisterPage = () => {
       <label className="text-xs text-gray-400">
         Password:
         <input
-          type="Password"
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder="password"
@@ -58,7 +60,7 @@ const RegisterPage = () => {
         </button>
         <Link
           to={"/login"}
-          className="flex justify-center items-center text-sx text-white">
+          className="flex justify-center items-center text-xs text-white">
           Уже зарегистрированы
         </Link>
       </div>
