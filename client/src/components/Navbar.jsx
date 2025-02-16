@@ -1,10 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { checkIsAuth } from "../redux/features/auth/authSlice.js";
+// import { checkIsAuth } from "../redux/features/auth/authSlice.js";
+import { logout } from "../redux/features/auth/authSlice";
+
 
 const Navbar = () => {
 
-  const isAuth = useSelector(checkIsAuth)
+  const dispatch = useDispatch();
+  const isAuth = useSelector(state => Boolean(state.auth.token));
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const activeStyles = {
     color: 'white'
@@ -34,7 +41,7 @@ const Navbar = () => {
       </ul>}
       <div className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm px-4 py-2 cursor-pointer">
        {isAuth ? (
-         <button>Exit</button>
+         <button onClick={handleLogout}>Exit</button>
        ) : (
        <Link to={'/login'}>Login</Link>
        )}

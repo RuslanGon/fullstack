@@ -3,7 +3,7 @@ import axios from "../../../utils/axios.js";
 
 const initialState = {
     user: null,
-    token: null,
+    token: window.localStorage.getItem('token') || null,
     isLoading: false,
     status: null
 };
@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ username, p
     }
 });
 
-export const getMe = createAsyncThunk('auth/getme', async ({ rejectWithValue }) => {
+export const getMe = createAsyncThunk('auth/getme', async (_, { rejectWithValue }) => {
     try {
         const { data } = await axios.get('/auth/me');
         return data;
@@ -46,18 +46,16 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logout: state => {
-            state.user = null
-            state.token = null
-            state.isLoading = false
-            state.status = null
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            state.isLoading = false;
+            state.status = null;
+            window.localStorage.removeItem('token');
         }
     },
     extraReducers: (builder) => {
         builder
-
-        // Register
-
             .addCase(registerUser.pending, (state) => {
                 state.isLoading = true;
                 state.status = null;
@@ -72,9 +70,6 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.status = action.payload;
             })
-
-            // Login
-
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
                 state.status = null;
@@ -89,9 +84,6 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.status = action.payload;
             })
-
-            // getMe проверка авторизации
-
             .addCase(getMe.pending, (state) => {
                 state.isLoading = true;
                 state.status = null;
@@ -105,11 +97,12 @@ export const authSlice = createSlice({
             .addCase(getMe.rejected, (state, action) => {
                 state.isLoading = false;
                 state.status = action.payload;
-            })
-
+            });
     }
 });
 
-export const checkIsAuth = state => Boolean(state.auth.token)
+
+export const { logout } = authSlice.actions;
+export const checkIsAuth = (state) => Boolean(state.auth.token);
 
 export default authSlice.reducer;
