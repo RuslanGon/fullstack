@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { registerUser } from "../redux/features/auth/authSlice.js";
+import {toast} from 'react-toastify'
 
 
 const RegisterPage = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
   const dispatsh = useDispatch()
+
+  const {status} = useSelector(state => state.auth.status)
+
+  useEffect(() => {
+
+  },[status])
 
   const handleSubmit = () => {
     try {
@@ -24,8 +30,7 @@ const RegisterPage = () => {
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="w-1/4 h-60 mx-auto mt-40"
-    >
+      className="w-1/4 h-60 mx-auto mt-40">
       <h1 className="text-lg text-white text-center">Registration</h1>
       <label className="text-xs text-gray-400">
         Username:
