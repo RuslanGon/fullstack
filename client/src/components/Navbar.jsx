@@ -1,15 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();  // Добавьте useNavigate
+  const navigate = useNavigate();  
   const isAuth = useSelector((state) => Boolean(state.auth.token));
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/register");  // Направление на страницу регистрации после выхода
+    toast('Вы вышли из системы')
+    navigate("/register");  
   };
 
   const activeStyles = {
