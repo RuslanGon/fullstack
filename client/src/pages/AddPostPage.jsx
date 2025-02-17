@@ -14,6 +14,13 @@ const AddPostPage = () => {
           placeholder="Заголовок"
         />
       </label>
+      <label className="text-xs text-white opacity-70">
+        Описание поста
+        <textarea
+          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700 resize-none h-40"
+          placeholder="текст"
+        />
+      </label>
     </form>
   );
 };
