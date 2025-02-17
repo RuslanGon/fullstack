@@ -2,7 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors'
+
 import authRouter from './routes/auth.js'
+import postRouter from './routes/posts.js'
+
 
 const app = express();
 dotenv.config();
@@ -20,6 +23,8 @@ app.use(express.json())
 // Routes
 
 app.use('/api/auth', authRouter)
+app.use('/api/posts', postRouter)
+
 
 // app.get('/', (req, res) => {
 // return res.json({message:'All is fine Ruslan'})

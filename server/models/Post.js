@@ -5,7 +5,7 @@ const PostSchema = new mongoose.Schema(
     userName: {
         type: String,
       },
-    tittle: {
+    title: {
       type: String,
       required: true,
     },
