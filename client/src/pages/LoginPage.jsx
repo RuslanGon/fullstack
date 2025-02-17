@@ -10,14 +10,14 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
 
-  const status = useSelector(state => state.auth.status);
+  // const status = useSelector(state => state.auth.status);
   const isAuth = useSelector(state => Boolean(state.auth.token)); 
 
-  useEffect(() => {
-    if (status) {
-      toast(toast());
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (status) {
+  //     toast(toast());
+  //   }
+  // }, [status]);
 
   useEffect(() => {
     if (isAuth) {
