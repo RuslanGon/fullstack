@@ -17,10 +17,14 @@ const AddPostPage = () => {
       <label className="text-xs text-white opacity-70">
         Описание поста
         <textarea
-          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700 resize-none h-40"
+          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700 resize-none h-20"
           placeholder="текст"
         />
       </label>
+      <div className="flex gap-8 items-center justify-center mt-4">
+        <button className="flex items-center justify-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4 cursor-pointer">Добавить пост</button>
+        <button className="flex items-center justify-center bg-red-500 text-xs text-white rounded-sm py-2 px-4 cursor-pointer">Удалить пост</button>
+      </div>
     </form>
   );
 };
