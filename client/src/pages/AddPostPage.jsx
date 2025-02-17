@@ -6,8 +6,13 @@ const AddPostPage = () => {
         <input type="file" className="hidden" />
       </label>
       <div className="flex object-cover py-2">IMAGE</div>
-      <label className="text-xs text-white opacity-70">Заголовок поста
-      <input type="text" className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700" placeholder="Заголовок" />
+      <label className="text-xs text-white opacity-70">
+        Заголовок поста
+        <input
+          type="text"
+          className="mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700"
+          placeholder="Заголовок"
+        />
       </label>
     </form>
   );
