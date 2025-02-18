@@ -15,12 +15,11 @@ const MainPage = () => {
     dispatch(getAllPosts())
   }, [dispatch])
 
-  if(!posts.lenght) {
+  if(!posts.length) {
 return (
   <div className="text-xl text-center text-white py-10">Постов не существует</div>
 )
   }
-
   return (
     <div className="max-w-[900px] mx-auto py-10">
       <div className="flex justify-between gap-8">
