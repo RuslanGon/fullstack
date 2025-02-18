@@ -1,3 +1,4 @@
+import PopularPosts from "../components/PopularPosts.jsx"
 import PostItem from "../components/PostItem.jsx"
 
 const MainPage = () => {
@@ -9,7 +10,7 @@ const MainPage = () => {
         </div>
         <div className="basis-1/5">
           <div className="text-xs text-white uppercase">Popular</div>
-          POPULAR POST
+          <PopularPosts />
         </div>
       </div>
     </div>
