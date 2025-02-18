@@ -4,6 +4,7 @@ import PostItem from "../components/PostItem.jsx"
 import { useEffect } from "react";
 import { getAllPosts } from "../redux/features/post/postSlice.js";
 
+
 const MainPage = () => {
 
   const dispatch = useDispatch();

@@ -1,4 +1,5 @@
 import { AiFillEye, AiOutlineMessage } from "react-icons/ai";
+import { format } from 'date-fns';
 
 const PostItem = ({post}) => {
 
@@ -15,7 +16,9 @@ const PostItem = ({post}) => {
       <div className="">IMAGE</div>
       <div className="flex justify-between items-center pt-2">
         <div className="text-xs text-white opacity-50">{post.username}</div>
-        <div className="text-xs text-white opacity-50">{post.createdAt}</div>
+        <div className="text-xs text-white opacity-50">
+        {format(new Date(post.createdAt), 'd MMM yyyy')}
+        </div>
       </div>
       <div className="text-xl text-white">{post.title}</div>
       <p className="text-xs text-white opacity-60 pt-4">{post.text}</p>
