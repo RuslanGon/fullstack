@@ -9,7 +9,6 @@ export const createPost = async (req, res) => {
     try {
         const { title, text } = req.body
         const user = await User.findById(req.userId)
-
         if (req.files) {
             let fileName = Date.now().toString() + req.files.image.name
             const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -22,7 +21,6 @@ export const createPost = async (req, res) => {
                 imgUrl: fileName,
                 author: req.userId,
             })
-
             await newPostWithImage.save()
             await User.findByIdAndUpdate(req.userId, {
                 $push: { posts: newPostWithImage },
@@ -30,7 +28,6 @@ export const createPost = async (req, res) => {
 
             return res.json(newPostWithImage)
         }
-
         const newPostWithoutImage = new Post({
             username: user.username,
             title,
@@ -47,3 +44,18 @@ export const createPost = async (req, res) => {
         res.json({ message: 'Что-то пошло не так.' })
     }
 }
+
+// Get All posts getAll
+
+export const getAll = async (req, res) => {
+  try {
+    const posts = await Post.find().sort("-createdAt");
+    const popularPosts = await Post.find().limit(5).sort("-views");
+    if (!posts) {
+      return res.json({ message: "Постов нет." });
+    }
+    res.json({posts, popularPosts});
+  } catch (error) {
+    res.json({ message: "Что-то пошло не так." });
+  }
+};
