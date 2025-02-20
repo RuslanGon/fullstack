@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
-import logo from '../../public/3d.jpg'
+import logo from '../assets/3d.jpg';
+
 
 
 const Navbar = () => {
