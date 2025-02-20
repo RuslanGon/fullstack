@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 import { AiFillEye, AiOutlineMessage, AiTwotoneEdit, AiFillDelete  } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { removePost } from '../redux/features/post/postSlice.js';
 import { toast } from 'react-toastify';
 
@@ -11,6 +11,8 @@ const PostPage = () => {
 const [post, setPost] = useState(null)
 const params = useParams()
 const dispatch = useDispatch()
+const navigate = useNavigate();
+
 const user  = useSelector(state => state.auth.user)
 
 const fetchPost = useCallback(async () => {
@@ -43,6 +45,7 @@ const fetchPost = useCallback(async () => {
       await dispatch(removePost(params.id)).unwrap();
       toast.success('Пост был удалён.');
       setPost(null); // Очистка состояния поста после удаления
+      navigate('/posts')
     } catch (error) {
       console.error('Ошибка при удалении:', error);
       toast.error('Ошибка при удалении поста.');
