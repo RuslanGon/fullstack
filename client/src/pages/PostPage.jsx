@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 const PostPage = () => {
   const [post, setPost] = useState(null)
 const params = useParams()
-console.log("ID поста:", params.id)
+
 
 const fetchPost = useCallback(async () => {
   try {
