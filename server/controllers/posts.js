@@ -73,6 +73,7 @@ export const getById = async (req, res) => {
   }
 }
 
+
 // export const getById = async (req, res) => {
 //   try {
 //     // Найдем пост по ID, увеличим счетчик просмотров и вернем обновленный пост
@@ -92,3 +93,20 @@ export const getById = async (req, res) => {
 //     res.status(500).json({ message: "Что-то пошло не так." });
 //   }
 // };
+
+// Get My Posts
+
+export const getMyPosts = async (req, res) => {
+  try {
+      const user = await User.findById(req.userId)
+      const list = await Promise.all(
+          user.posts.map((post) => {
+              return Post.findById(post._id)
+          }),
+      )
+
+      res.json(list)
+  } catch (error) {
+      res.json({ message: 'Что-то пошло не так.' })
+  }
+}
