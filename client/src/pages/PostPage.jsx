@@ -2,7 +2,7 @@ import axios from '../utils/axios.js'
 import { format } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 import { AiFillEye, AiOutlineMessage } from "react-icons/ai";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const PostPage = () => {
   const [post, setPost] = useState(null)
@@ -39,7 +39,7 @@ const fetchPost = useCallback(async () => {
   return (
     <div className="">
       <button className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4">
-        Назад
+        <Link to={'/'}>Назад</Link>
       </button>
       <div className="flex gap-10 py-8">
         <div className="w-2/3">
