@@ -30,16 +30,14 @@ const fetchPost = useCallback(async () => {
 
   if (!post) {
     return (
-      <div className="text-xl text-center text-white py-10">
-        Постов не существует
-      </div>
+      <div className="text-xl text-center text-white py-10">Загрузка ...</div>
     );
   }
 
   return (
     <div className="">
       <button className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4">
-        <Link to={'/'}>Назад</Link>
+        <Link to={'/'} className='flex'>Назад</Link>
       </button>
       <div className="flex gap-10 py-8">
         <div className="w-2/3">
