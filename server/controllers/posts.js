@@ -64,11 +64,31 @@ export const getAll = async (req, res) => {
 
 export const getById = async (req, res) => {
   try {
-   const post = await Post.findOneAndUpdate(req.params.id, {
-    $inc: { views: 1 }
-   })
-    res.json(post);
+      const post = await Post.findByIdAndUpdate(req.params.id, {
+          $inc: { views: 1 },
+      })
+      res.json(post)
   } catch (error) {
-    res.json({ message: "Что-то пошло не так." });
+      res.json({ message: 'Что-то пошло не так.' })
   }
-};
+}
+
+// export const getById = async (req, res) => {
+//   try {
+//     // Найдем пост по ID, увеличим счетчик просмотров и вернем обновленный пост
+//     const post = await Post.findByIdAndUpdate(
+//       req.params.id, 
+//       { $inc: { views: 1 } },
+//       { new: true }  // Возвращаем обновленный пост
+//     );
+
+//     // Если пост не найден, возвращаем ошибку
+//     if (!post) {
+//       return res.status(404).json({ message: "Пост не найден." });
+//     }
+
+//     res.json(post);
+//   } catch (error) {
+//     res.status(500).json({ message: "Что-то пошло не так." });
+//   }
+// };

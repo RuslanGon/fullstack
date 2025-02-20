@@ -7,11 +7,22 @@ import { useParams } from 'react-router-dom';
 const PostPage = () => {
   const [post, setPost] = useState(null)
 const params = useParams()
+console.log("ID поста:", params.id)
 
-  const fetchPost = useCallback(async () => {
+const fetchPost = useCallback(async () => {
+  try {
     const { data } = await axios.get(`/posts/${params.id}`);
-    setPost(data);
-  }, [params.id]);
+    if (data.message) {
+      console.error("Ошибка на сервере:", data.message);
+      setPost(null);
+    } else {
+      setPost(data);
+    }
+  } catch (error) {
+    console.error("Ошибка запроса:", error);
+    setPost(null);
+  }
+}, [params.id]);
 
   useEffect(() => {
     fetchPost()
