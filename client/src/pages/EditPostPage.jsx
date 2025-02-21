@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from '../utils/axios.js'
+import { updatePost } from "../redux/features/post/postSlice.js";
+
 
 
 const EditPostPage = () => {
@@ -31,12 +33,18 @@ const EditPostPage = () => {
   }, [fetchPost])
 
   const submitHandler = () => {
-try {
-  const updatePost = new FormData()
-} catch (error) {
-  console.log(error);
-}
-  }
+    try {
+      const updatedPost = new FormData();
+      updatedPost.append("title", title);
+      updatedPost.append("text", text);
+      updatedPost.append("id", params.id);
+      updatedPost.append("image", newImage);
+      dispatch(updatePost(updatedPost))
+      navigate('/posts')
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const clearFormHandler = () => {
     setText('')
