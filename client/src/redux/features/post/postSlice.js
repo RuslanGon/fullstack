@@ -30,11 +30,22 @@ export const getAllPosts = createAsyncThunk('/post/getAllPosts', async() => {
 export const removePost = createAsyncThunk('post/removePost', async (id, { rejectWithValue }) => {
   try {
     const { data } = await axios.delete(`/posts/${id}`);
-    return data; // Вернёт объект { message, _id }
+    return data; 
   } catch (error) {
     return rejectWithValue(error.response?.data || 'Ошибка при удалении');
   }
 });
+
+export const updatePost = createAsyncThunk('post/updatePost', async (updatePost) => {
+  try {
+    const { data } = await axios.put(`/posts/${updatePost.id}`, updatePost);
+    return data; 
+  } catch (error) {
+     console.log(error);
+  }
+});
+
+
 
 export const postSlice = createSlice({
     name: "post",
@@ -75,6 +86,19 @@ export const postSlice = createSlice({
           state.posts = state.posts.filter((post) => post._id !== action.payload._id);
         })
         .addCase(removePost.rejected, (state) => {
+            state.loading = false
+        })
+
+
+        .addCase(updatePost.pending, (state) => {
+          state.loading = true
+        })
+        .addCase(updatePost.fulfilled, (state, action) => {
+          state.loading = false;
+          const index = state.posts.findIndex(post => post._id === action.payload._id )
+          state.posts[index] = action.payload
+        })
+        .addCase(updatePost.rejected, (state) => {
             state.loading = false
         })
     }
