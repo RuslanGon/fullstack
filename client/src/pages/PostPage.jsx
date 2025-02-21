@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { removePost } from '../redux/features/post/postSlice.js';
 import { toast } from 'react-toastify';
-import { createComment } from '../redux/features/comment/commentSlice.js';
+import { createComment, getPostComments } from '../redux/features/comment/commentSlice.js';
+import CommentItem from '../components/CommentItem.jsx';
 
 const PostPage = () => {
 const [post, setPost] = useState(null)
@@ -17,6 +18,19 @@ const dispatch = useDispatch()
 const navigate = useNavigate();
 
 const user  = useSelector(state => state.auth.user)
+const comments = useSelector(state => state.comment.comments)
+
+const fetchComments = useCallback(async () => {
+  try {
+       dispatch(getPostComments(params.id))
+  } catch (error) {
+      console.log(error)
+  }
+}, [params.id, dispatch])
+
+useEffect(() => {
+fetchComments()
+}, [fetchComments])
 
 const fetchPost = useCallback(async () => {
   try {
@@ -64,6 +78,8 @@ const fetchPost = useCallback(async () => {
       console.log(error);
     }
   };
+
+ 
 
   return (
     <div className="">
@@ -148,6 +164,9 @@ const fetchPost = useCallback(async () => {
               Отправить
             </button>
           </form>
+          {comments?.map(comment => (
+            <CommentItem  key={comment._id} comment={comment}/>
+          ))}
         </div>
       </div>
     </div>
