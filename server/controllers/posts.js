@@ -154,3 +154,19 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ message: "Ошибка при обновлении поста." });
   }
 };
+
+
+// Get Post Comments getPostComments
+
+export const getPostComments = async (req, res) => {
+  try {
+   const post = await Post.findById(req.params.id)
+   const list = await Promise.all(post.comments.map(comment => {
+    return comment.findById(comment)
+   }))
+   res.json(list)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Ошибка при обновлении комментария." });
+  }
+}
