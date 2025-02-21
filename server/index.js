@@ -6,6 +6,7 @@ import fileUpload from "express-fileupload";
 
 import authRouter from './routes/auth.js'
 import postRouter from './routes/posts.js'
+import commentRouter from './routes/comments.js'
 
 
 const app = express();
@@ -29,6 +30,8 @@ app.use(express.static('uploads'))
 
 app.use('/api/auth', authRouter)
 app.use('/api/posts', postRouter)
+app.use('/api/comments', commentRouter)
+
 
 
 // app.get('/', (req, res) => {

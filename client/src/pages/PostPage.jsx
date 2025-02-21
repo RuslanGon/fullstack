@@ -93,7 +93,7 @@ const fetchPost = useCallback(async () => {
             {post?.text || "Нет текста"}
           </p>
           <div className="flex items-center gap-3 mt-2 justify-between">
-            <div className='flex gap-3 pt-4'>
+            <div className="flex gap-3 pt-4">
               <button className="flex items-center justify-center gap-2 text-xs text-white opacity-50">
                 <AiFillEye /> <span>{post?.views || 0}</span>
               </button>
@@ -102,22 +102,29 @@ const fetchPost = useCallback(async () => {
               </button>
             </div>
             {user?._id === post.author && (
-              <div className='flex gap-3 pt-4'>
-              <button className="flex items-center justify-center gap-2 text-white opacity-50">
-               <Link to={`/${params.id}/edit`}>
-               <AiTwotoneEdit /> 
-               </Link>
-              </button>
-              <button
-              onClick={removePostHandler}
-               className="flex items-center justify-center gap-2 text-white opacity-50 cursor-pointer">
-                <AiFillDelete /> 
-              </button>
-            </div>
+              <div className="flex gap-3 pt-4">
+                <button className="flex items-center justify-center gap-2 text-white opacity-50">
+                  <Link to={`/${params.id}/edit`}>
+                    <AiTwotoneEdit />
+                  </Link>
+                </button>
+                <button
+                  onClick={removePostHandler}
+                  className="flex items-center justify-center gap-2 text-white opacity-50 cursor-pointer"
+                >
+                  <AiFillDelete />
+                </button>
+              </div>
             )}
           </div>
         </div>
-        <div className="w-1/3">COMMENTS</div>
+        <div className="w-1/3 p-8 bg-gray-700 flex flex-col gap-2 rounded-sm">
+          <form className="flex gap-2">
+            <input className='w-full rounded-sm bg-gray-400 border p-2 text-xs outline-none placeholder: text-gray-700' type="text"  placeholder='comment' />
+            <button className='flex items-center justify-center rounded-sm bg-gray-600 text-xs text-white cursor-pointer py-2 px-4' type='submit'>Отправить
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
