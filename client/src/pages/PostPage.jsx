@@ -159,8 +159,7 @@ const fetchPost = useCallback(async () => {
             <button
               onClick={handleSubmit}
               className="flex items-center justify-center rounded-sm bg-gray-600 text-xs text-white cursor-pointer py-2 px-4"
-              type="submit"
-            >
+              type="submit" >
               Отправить
             </button>
           </form>
