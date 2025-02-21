@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { removePost } from '../redux/features/post/postSlice.js';
 import { toast } from 'react-toastify';
+import { createComment } from '../redux/features/comment/commentSlice.js';
 
 const PostPage = () => {
 const [post, setPost] = useState(null)
+const [comment, setComment] = useState('')
+
 const params = useParams()
 const dispatch = useDispatch()
 const navigate = useNavigate();
@@ -44,11 +47,21 @@ const fetchPost = useCallback(async () => {
     try {
       await dispatch(removePost(params.id)).unwrap();
       toast.success('Пост был удалён.');
-      setPost(null); // Очистка состояния поста после удаления
+      setPost(null); 
       navigate('/posts')
     } catch (error) {
       console.error('Ошибка при удалении:', error);
       toast.error('Ошибка при удалении поста.');
+    }
+  };
+
+  const handleSubmit = () => {
+    try {
+      const postId = params.id;
+      dispatch(createComment({ postId, comment }));
+      setComment('')
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -119,9 +132,20 @@ const fetchPost = useCallback(async () => {
           </div>
         </div>
         <div className="w-1/3 p-8 bg-gray-700 flex flex-col gap-2 rounded-sm">
-          <form className="flex gap-2">
-            <input className='w-full rounded-sm bg-gray-400 border p-2 text-xs outline-none placeholder: text-gray-700' type="text"  placeholder='comment' />
-            <button className='flex items-center justify-center rounded-sm bg-gray-600 text-xs text-white cursor-pointer py-2 px-4' type='submit'>Отправить
+          <form className="flex gap-2" onSubmit={e => e.preventDefault()}>
+            <input
+              className="w-full rounded-sm bg-gray-400 border p-2 text-xs outline-none placeholder: text-gray-700"
+              type="text"
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              placeholder="comment"
+            />
+            <button
+              onClick={handleSubmit}
+              className="flex items-center justify-center rounded-sm bg-gray-600 text-xs text-white cursor-pointer py-2 px-4"
+              type="submit"
+            >
+              Отправить
             </button>
           </form>
         </div>
